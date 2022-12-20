@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import Typography from "@mui/material/Typography";
 
 import { Order } from "../../../__generated__/graphql";
 
@@ -23,7 +24,10 @@ const RecentOrders: React.FC<Props> = (props): any => {
       };
     }) ?? [];
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box sx={{ height: 400, width: "100%", marginTop: "16px" }}>
+      <Typography variant="h5" gutterBottom>
+        Recent Orders
+      </Typography>
       <DataGrid
         rows={rows}
         columns={columns}

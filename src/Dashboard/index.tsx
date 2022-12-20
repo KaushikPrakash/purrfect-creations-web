@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 
 import type {} from "@mui/x-data-grid/themeAugmentation";
 import { Container, Paper, styled, TextField, Box } from "@mui/material";
@@ -65,13 +65,6 @@ const Dashboard: React.FC = (): any => {
         </Grid>
         <Grid item xs={4}>
           <Item sx={{ marginTop: "8px" }}>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Total Orders this month: {totalOrderByMonth}
-            </Typography>
             <TextField
               id="date"
               label="Select a date for total orders"
@@ -84,7 +77,7 @@ const Dashboard: React.FC = (): any => {
               onChange={handleChange}
             />
             <Typography variant="h5" component="div">
-              {totalOrderByMonth}
+              Total orders for month: {totalOrderByMonth}
             </Typography>
           </Item>
         </Grid>
