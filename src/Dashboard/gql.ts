@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const DashboardQuery = gql`
+export const DASHBOARD_QUERY = gql`
   query DashboardQuery($numOrders: Int!) {
 
     recentOrders(numOrders: $numOrders) {
@@ -26,7 +26,7 @@ export const DashboardQuery = gql`
 `
   ;
 
-export const TotalOrdersByMonthQuery = gql`
+export const TOTAL_ORDERS_BY_MONTH = gql`
   query TotalOrdersByMonthQuery($selectedDate: Date!) {
 
   totalOrdersByMonth(selectedDate: $selectedDate)

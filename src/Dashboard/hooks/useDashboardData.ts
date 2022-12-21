@@ -1,20 +1,13 @@
-import { useEffect } from "react";
-
 import { useQuery } from '@apollo/client';
-import { DashboardQuery } from "../gql"
+import { DASHBOARD_QUERY } from "../gql"
 
 const useDashboardData = (numOrders: number) => {
-  const { data, loading, error, refetch } = useQuery(
-    DashboardQuery, {
-    variables: { numOrders },
-    fetchPolicy: "cache-first",
-    pollInterval: 0,
+  console.log("useDashboardData");
+  const { data, loading, error } = useQuery(
+    DASHBOARD_QUERY, {
+    variables: { numOrders }
   }
   );
-
-  useEffect(() => {
-    refetch();
-  }, [numOrders, refetch]);
 
   return { data, loading, error };
 };

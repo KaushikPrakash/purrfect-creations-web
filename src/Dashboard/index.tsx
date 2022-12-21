@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useLazyQuery, useQuery } from "@apollo/client";
 
 import type {} from "@mui/x-data-grid/themeAugmentation";
 import { Container, Paper, styled, TextField, Box } from "@mui/material";
@@ -10,13 +11,14 @@ import useDashboardData from "./hooks/useDashboardData";
 import RevenueGraph from "./components/RevenueGraph";
 import LatestOrders from "./components/RecentOrders";
 import BasicCard from "./components/Summary";
-import useTotalOrdersByMonthData from "./hooks/useTotalOrdersByMonthData";
+
+import { TOTAL_ORDERS_BY_MONTH } from "./gql";
 
 const Dashboard: React.FC = (): any => {
   const [selectedDate, setSelectedDate] = useState<any>();
   const { data, loading } = useDashboardData(10);
-  const { data: totalOrdersByMonthData } =
-    useTotalOrdersByMonthData(selectedDate);
+
+  const [getTotalOrdersByMonth] = useLazyQuery(TOTAL_ORDERS_BY_MONTH);
 
   const [totalOrderByMonth, setTotalOrderByMonth] = useState(0);
 
@@ -28,20 +30,13 @@ const Dashboard: React.FC = (): any => {
     color: theme.palette.text.secondary,
   }));
 
-  const memoizedRevenueGraph = useMemo(
-    () => (
-      <RevenueGraph totalRevenueByMonth={data?.totalRevenueByMonthAndYear} />
-    ),
-    [data?.totalRevenueByMonthAndYear]
-  );
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
+    const { data: total } = await getTotalOrdersByMonth({
+      variables: { selectedDate: event.target.value },
+    });
+    setTotalOrderByMonth(total.totalOrderByMonth);
   };
-
-  useMemo(() => {
-    setTotalOrderByMonth(totalOrdersByMonthData?.totalOrdersByMonth);
-  }, [totalOrdersByMonthData]);
 
   return loading ? (
     <Box sx={{ display: "flex" }}>
@@ -61,7 +56,11 @@ const Dashboard: React.FC = (): any => {
           />
         </Grid>
         <Grid item xs={8}>
-          <Item>{memoizedRevenueGraph}</Item>
+          <Item>
+            <RevenueGraph
+              totalRevenueByMonth={data?.totalRevenueByMonthAndYear}
+            />
+          </Item>
         </Grid>
         <Grid item xs={4}>
           <Item sx={{ marginTop: "8px" }}>
