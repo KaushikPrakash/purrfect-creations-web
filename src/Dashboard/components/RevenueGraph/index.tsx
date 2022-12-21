@@ -25,7 +25,6 @@ type Props = {
   totalRevenueByMonth: TotalRevenueByMonthType[];
 };
 const RevenueGraph: React.FC<Props> = (props): any => {
-  console.log("this omponent is called");
   const { totalRevenueByMonth } = props;
   const labels = totalRevenueByMonth?.map(
     (item: { month: string; year: string }) => `${item.month} ${item.year}`
@@ -56,4 +55,4 @@ const RevenueGraph: React.FC<Props> = (props): any => {
   return <Bar options={options} data={data} />;
 };
 
-export default (RevenueGraph);
+export default RevenueGraph;

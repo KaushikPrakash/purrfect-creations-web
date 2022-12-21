@@ -21,10 +21,10 @@ const TotalOrdersOfMonth: React.FC = (): any => {
   const [getTotalOrdersByMonth] = useLazyQuery(TOTAL_ORDERS_BY_MONTH);
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
-    const { data: total } = await getTotalOrdersByMonth({
+    const { data } = await getTotalOrdersByMonth({
       variables: { selectedDate: event.target.value },
     });
-    setTotalOrderByMonth(total.totalOrderByMonth);
+    setTotalOrderByMonth(data.totalOrdersByMonth);
   };
   return (
     <Item sx={{ marginTop: "8px" }}>
