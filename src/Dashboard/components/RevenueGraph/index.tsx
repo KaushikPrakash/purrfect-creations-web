@@ -56,4 +56,4 @@ const RevenueGraph: React.FC<Props> = (props): any => {
   return <Bar options={options} data={data} />;
 };
 
-export default RevenueGraph;
+export default (RevenueGraph);
